@@ -21,7 +21,6 @@ function foo(data) {
                     j.weekends.push({startDate: i.startDate, endDate: i.endDate}); 
                 }
                 continue goto;
-                // mb break which is above should be here "break goto;"
             }
         }
         {
