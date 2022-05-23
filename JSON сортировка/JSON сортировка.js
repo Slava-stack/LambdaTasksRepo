@@ -45,23 +45,46 @@ const getJson = async (link) => {
             return [link, body];
         }catch(e){
             if(e.response.status >= 400 && i === 2) throw new Error(`${link}: — ${e.response.status} status :(`);
-            else if(i === 2) throw new Error(`${link}: — ${e}`);
+            // else if(i === 2) throw new Error(`${link}: — ${e}`);     // it was written on the 23.05 cuz of some connection problems
             // console.log(`${link}: — ${e.response.status} status :(`) // for that I need to use the second version of catch
             // else if(e.request && i === 2) console.log(`${link}: — no answer`)   // not sure about this line since it doesn't work
         }
     }
 }
 
-let falseTrueValues = [];
-urls.forEach(async url => {
-    try{
-        const jsonData = await getJson(url)
-        const keyValue = findVal(jsonData[1], 'isDone');
-        console.log(`${jsonData[0]}:  isDone — ${keyValue}`);
-        falseTrueValues.push(keyValue);
-        // console.log(falseTrueValues); // must I use setTimeout ????? Another promise???
-    }catch(e) {console.log(e.message)}
-})
+// let falseTrueValues = [];
+// urls.forEach(async url => {
+//     try{
+//         const jsonData = await getJson(url)
+//         const keyValue = findVal(jsonData[1], 'isDone');
+//         console.log(`${jsonData[0]}:  isDone — ${keyValue}`);
+//         falseTrueValues.push(keyValue);
+//         console.log(falseTrueValues); // must I use setTimeout ????? Another promise???
+//     }catch(e) {console.log(e.message)}
+// })
+
+
+// https://ask-dev.ru/info/33869/using-asyncawait-with-a-foreach-loop the first answers the second code
+(async function printValues (){
+    let falseTrueValues = [];
+    await Promise.all(urls.map(async (url) =>
+        {
+            try{
+                const jsonData = await getJson(url)
+                const keyValue = findVal(jsonData[1], 'isDone');
+                console.log(`${jsonData[0]}:  isDone — ${keyValue}`);
+                falseTrueValues.push(keyValue);
+            }catch(e) {console.log(e.message)}
+        }
+    ))
+    const values = falseTrueValues.reduce((arr, el) => {
+        arr[el] = (arr[el] || 0) + 1;
+        return arr;
+    }, {})
+    console.log(`
+Значение True: ${values[true]},
+Значение False: ${values[false]}`);
+})()
 
 
 // DUNNO (main code structure)
