@@ -1,7 +1,5 @@
-    """функция через рекурсию передает в другую функцию слово[1:] и так далее, до len(слово[1:] == 1)
-       отдаёт масив.
-     func("abcd") > func("bcd") > func("cd") > func("d") > array[d], рекурсивно, потом бинарно добавляем символ с точкой
-     и без.  |         |                |                    |
+     func("abcd") > func("bcd") > func("cd") > func("d") > array[d], 
+	  |         |                |                    |
                |         |                |                    |
                |         |                v                    v
                |         |           word['cd'][1:] + d / .d
@@ -17,4 +15,4 @@
     word['abcd'][1:] + bcd/.bcd/b.cd/.b.cd/bc.d/.bc.d/b.c.d/.b.c.d
                                              ||
     ['abcde', 'a.bcde', 'ab.cde', 'abc.de', 'abcd.e', 'a.b.cde', 'a.bc.de', 'ab.c.de', 'a.bcd.e',
-    'ab.cd.e', 'abc.d.e', 'a.b.c.de', 'a.b.cd.e', 'a.bc.d.e', 'ab.c.d.e', 'a.b.c.d.e']"""
+    'ab.cd.e', 'abc.d.e', 'a.b.c.de', 'a.b.cd.e', 'a.bc.d.e', 'ab.c.d.e', 'a.b.c.d.e']

@@ -6,7 +6,7 @@ function foo(data) {
     let arr = new Array();
         goto:for (let i of data) {
         let el = new Object();
-        if (arr.length === 0) {     // mb i will need to get rid of this condition
+        if (arr.length === 0) {
             {
                 el["userId"] = i.user._id,
                 el["name"] = i.user.name,
@@ -17,7 +17,7 @@ function foo(data) {
         }
         for (let j of Object.values(arr)) {
             if (i.user.name === j.name) {
-                if(i.startDate !== j.weekends[0].startDate && i.endDate !== j.weekends[0].endDate){     // must be done via cycle
+                if(i.startDate !== j.weekends[0].startDate && i.endDate !== j.weekends[0].endDate){
                     j.weekends.push({startDate: i.startDate, endDate: i.endDate}); 
                 }
                 continue goto;
