@@ -24,7 +24,7 @@ const urls = [
 
 function findVal(object, key) {
     let value;
-    Object.keys(object).some((k) {
+    Object.keys(object).some((k) => {
         if (k === key) {
             value = object[k];
             return true;
