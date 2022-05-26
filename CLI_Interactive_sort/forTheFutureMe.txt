@@ -1,1 +1,2 @@
-I rly don't know how those case numbers work since it goes continuously in cycles as if it was recursion but there is no func inside of those cases :(
+I rly don't know how those case numbers work since it goes continuously in cycles as if it was recursion but there is no func inside of those cases :(.
+Via debug it's unreal to understand how it works cuz debug doesn't work appropriately with that code. 
