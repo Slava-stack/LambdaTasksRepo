@@ -1,0 +1,1 @@
+Don't know why  it works with Promise.all in this case I should have used Promise.allSettled
