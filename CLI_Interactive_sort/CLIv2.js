@@ -53,7 +53,6 @@ Select ${'(1 - 6)'.blue.bold} and press ${'ENTER'.blue.bold}: `, number => {
                     break;
                 case 'exit':
                     rl.close();
-                    break;
                 default:
                     rl.setPrompt('Enter the number according to the list of actions: '.red);
                     rl.prompt();
