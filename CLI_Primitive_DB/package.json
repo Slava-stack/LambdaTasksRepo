@@ -1,0 +1,16 @@
+{
+  "name": "cli_primitivedb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CLIPrimitiveDB.js",
+  "scripts": {
+    "start": "node  CLIPrimitiveDB.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
