@@ -1,7 +1,7 @@
-CLI_Interactive_sort/.idea/
-CLI_Primitive_DB/.idea/
-JSON_sorting/.idea/
-CLI_Telegram_Console_Sender/.idea/
-CLI_Telegram_Console_Sender/.env/
-CLI_TG_echo/.idea/
-CLI_TG_echo/.env/
+CLI_Interactive_sort/.idea
+CLI_Primitive_DB/.idea
+JSON_sorting/.idea
+CLI_Telegram_Console_Sender/.idea
+CLI_Telegram_Console_Sender/.env
+CLI_TG_echo/.idea
+CLI_TG_echo/.env
