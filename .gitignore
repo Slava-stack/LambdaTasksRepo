@@ -5,9 +5,9 @@ CLI_Telegram_Console_Sender/.idea
 CLI_Telegram_Console_Sender/.env
 CLI_TG_echo/.idea
 CLI_TG_echo/.env
-TelegramBot_weather_cast/.env
 TelegramBot_weather_cast/.idea
 TelegramBot_weather_cast/dot.json
 TelegramBot_weather_cast/telega_bot.jpg
 "TelegramBot_weather_cast/tg buttons.txt"
 "TelegramBot_weather_cast/web sock.txt"
+TelegramBot_weather_case/node_modules
