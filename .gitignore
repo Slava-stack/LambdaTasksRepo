@@ -10,4 +10,5 @@ TelegramBot_weather_cast/dot.json
 TelegramBot_weather_cast/telega_bot.jpg
 "TelegramBot_weather_cast/tg buttons.txt"
 "TelegramBot_weather_cast/web sock.txt"
-TelegramBot_weather_case/node_modules
+TelegramBot_weather_cast/node_modules
+TelegramBot_weather_cast/.env
