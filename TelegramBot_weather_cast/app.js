@@ -2,7 +2,6 @@ process.env["NTBA_FIX_319"] = 1;    // Needed to get rid of the issue
 process.env["NTBA_FIX_350"] = 1;    // Needed to get rid of the issue
 
 // - бот должен работать постоянно, а не только в момент, когда вы запускаете сервер.
-// сервис Heroku для выгрузки готового кода и его запуска «на сервере»
 // - продумайте вариант с использованием сокетов для того, чтобы ваш бот не усыпал по истечение 30 минут.
 // https://www.youtube.com/watch?v=wG7hX8Np1Pg
 
