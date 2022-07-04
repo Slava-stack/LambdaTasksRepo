@@ -1,7 +1,9 @@
 process.env["NTBA_FIX_319"] = 1;    // Needed to get rid of the issue
 process.env["NTBA_FIX_350"] = 1;    // Needed to get rid of the issue
+
 // IT SHOULD BE DONE VIA WEB SOCKETS BUT I DON'T KNOW AND VLADIMIR SAID THAT THERE IS AN ISSUE WITH THAT.
 // - продумайте вариант с использованием сокетов для того, чтобы ваш бот не усыпал по истечение 30 минут. (бот на хероку)
+
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios').default;
 const _ = require('./.env');
@@ -12,7 +14,7 @@ const bot = new TelegramBot(token, {polling: true});
 const citiesGeo = {Киев: {lat: 50.446990, lon: 30.522512}};
 const banks = [{name: 'monobank', url: 'https://api.monobank.ua/bank/currency'},
     {name: 'privatbank', url: 'https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5'}]
-// tg bot buttons
+// tg buttons
 const buttons = {
     buttonsOfCities: {
         reply_markup: JSON.stringify({
@@ -20,28 +22,24 @@ const buttons = {
             one_time_keyboard: true
         }),
     },
-    buttonsOptions: {
-        reply_markup: JSON.stringify({
-            inline_keyboard: [[
-                {text: 'С 6 часовым интервалом', callback_data: 6},
-                {text: 'С 3 часовым интервалом', callback_data: 3}
-            ]]
-        }),
-    },
-    currencyButtons: {
-        reply_markup: JSON.stringify({
-            inline_keyboard: [[
-                {text: 'USD ($)', callback_data: 'Dollars'},
-                {text: 'EUR (€)', callback_data: 'Euros'},
-            ]],
-        }),
-    },
     choiseButtons: {
         reply_markup: JSON.stringify({
             keyboard: [['Погода'], ['Курс валют']],
             one_time_keyboard: true
         }),
-    }
+    },
+    currencyButtonsV2: {
+        reply_markup: JSON.stringify({
+            keyboard: [['$'], ['€']],
+            one_time_keyboard: true
+        }),
+    },
+    buttonsOptionsV2: {
+        reply_markup: JSON.stringify({
+            keyboard: [['С 6 часовым интервалом'], ['С 3 часовым интервалом']],
+            one_time_keyboard: true
+        }),
+    },
 }
 
 // Currency
@@ -153,6 +151,7 @@ const getStringToSend = (jsonLikeData, city) => {
     }
     return string;
 };
+
 async function getWeatherData(city, interval, chatId) {
     const resp = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=` +
         `${citiesGeo[city].lat}&lon=${citiesGeo[city].lon}&units=metric&lang=ru&appid=${apiKey}`);
@@ -162,42 +161,33 @@ async function getWeatherData(city, interval, chatId) {
     await bot.sendMessage(chatId, jsonLikeData);
 }
 
-
 // tg bot
-bot.onText(/\/start/, msg => {
-    bot.sendMessage(msg.chat.id, 'Нажмите на город', buttons.choiseButtons);
-});
 bot.onText(/.+/, (match, msg) => {
-    const choice = match.text.trim();
-    const chatId = match.chat.id
-    if (choice === 'Погода') {
-        bot.sendMessage(chatId, "Выберите город", buttons.buttonsOfCities)
-        bot.onText(/.+/, (match, msg) => {
-            let city = match.text.trim();
-            if (Object.keys(citiesGeo).includes(city)) {
-                bot.sendMessage(match.chat.id, `Погода для города ${city}:`, buttons.buttonsOptions);
-                bot.on('callback_query', query => getWeatherData(city, +query.data, query.message.chat.id));
-            }
-        })
+    const answer = match.text.trim();
+    const chatId = match.chat.id;
+    switch (answer) {
+        case '/start':
+            bot.sendMessage(chatId, 'Выберите опцию', buttons.choiseButtons);
+            break;
+        case 'Погода':
+            bot.sendMessage(chatId, 'Погода для города Киев:', buttons.buttonsOptionsV2);
+            break;
+        case 'С 6 часовым интервалом':
+            getWeatherData('Киев', 3, chatId);
+            break;
+        case 'С 3 часовым интервалом':
+            getWeatherData('Киев', 6, chatId);
+            break;
+        case 'Курс валют':
+            bot.sendMessage(chatId, "Выберите интересующую валюту", buttons.currencyButtonsV2);
+            break;
+        case '$':
+            sendDollars(chatId);
+            break;
+        case '€':
+            sendEuro(chatId);
+            break;
+        default:
+            bot.sendMessage(chatId, "Пожалуйста введите /start и выберите нужную кнопку.");
     }
-    else if (choice === 'Курс валют'){
-        bot.sendMessage(chatId, "Выберите интересующую валюту", buttons.currencyButtons)
-        bot.on('callback_query', query => {
-            const chatId = query.message.chat.id;
-            const msgData = query.data;
-            if (msgData === 'Dollars') sendDollars(chatId);
-            else if (msgData === 'Euros') sendEuro(chatId);
-        })
-    }
-});
-
-console.log(`                                   ,,                                     
-\`7MM"""Yp,             mm          db                                     
-  MM    Yb             MM                                                 
-  MM    dP  ,pW"Wq.  mmMMmm      \`7MM  ,pP"Ybd     \`7MM  \`7MM  \`7MMpdMAo. 
-  MM"""bg. 6W'   \`Wb   MM          MM  8I   \`"       MM    MM    MM   \`Wb 
-  MM    \`Y 8M     M8   MM          MM  \`YMMMa.       MM    MM    MM    M8 
-  MM    ,9 YA.   ,A9   MM          MM  L.   I8       MM    MM    MM   ,AP 
-.JMMmmmd9   \`Ybmd9'    \`Mbmo     .JMML.M9mmmP'       \`Mbod"YML.  MMbmmd'  
-                                                                 MM       
-                                                               .JMML.`)
+})
