@@ -11,8 +11,12 @@ TelegramBot_weather_cast/telega_bot.jpg
 "TelegramBot_weather_cast/tg buttons.txt"
 "TelegramBot_weather_cast/web sock.txt"
 TelegramBot_weather_cast/node_modules
-TelegramBot_weather_cast/.env/
 Correctarium_[Back_+_Front]/.idea/
 TelegramBot_weather_cast/monobank.json
 TelegramBot_weather_cast/privatbank.json
+Correctarium/.idea/
+Correctarium/coverage/
+Correctarium/demo/
+Correctarium/node_modules/
+TelegramBot_weather_cast/.env
 
