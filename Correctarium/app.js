@@ -49,14 +49,8 @@ function calculateDate(hours) {
             }
         }
     }
-    // return m.locale('ru').calendar(); // main
     // return {date: m.locale('ru').calendar(), timeStamp: m.unix()};
     return `${m.day()}, ${m.format('H:mm')}`;    // testing
 }
-
-// console.log(
-//     getPriceAndHours('ru', 'docx', 1333).price,
-//     calculateDate(getPriceAndHours('ru', 'None', 1333).timeInHours)
-// );
 
 module.exports = {calculateDate, getPriceAndHours};
