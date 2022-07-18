@@ -10,8 +10,14 @@ class TokenService {
     generateTokens(payload) {
         const random30or60sec = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
         const accessToken = jwt.sign(payload, secret_jwt_access, {expiresIn: random30or60sec});
-        const refreshToken = jwt.sign(payload, secret_jwt_refresh, {expiresIn: '15 days'});
+        const refreshToken = jwt.sign(payload, secret_jwt_refresh); // {expiresIn: '15 days'}
         return {accessToken, refreshToken};
+    }
+
+    generateAccessToken(payload){
+        const random30or60sec = Math.floor(Math.random() * (60 - 30 + 1)) + 30;
+        const accessToken = jwt.sign(payload, secret_jwt_access, {expiresIn: random30or60sec});
+        return {accessToken};
     }
 
     async saveToken(userId, refreshToken) {
@@ -30,15 +36,6 @@ class TokenService {
         }
     }
 
-    // validateAccessToken(token) {
-    //     try {
-    //         return jwt.verify(token, secret_jwt_access);
-    //     } catch (e) {
-    //         console.log(e);
-    //         return null;
-    //     }
-    // }
-
     validateRefreshToken(token) {
         try {
             return jwt.verify(token, secret_jwt_refresh);
@@ -51,7 +48,6 @@ class TokenService {
     async findToken(refreshToken) {
         try {
             await client.connect();
-            await tokenValidationCollection.runJWTValidation();
             const refreshColl = await client.db("jwtoken").collection("refresh");
             return await refreshColl.findOne({refreshToken});
         } catch (e) {

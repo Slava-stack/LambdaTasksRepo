@@ -6,12 +6,13 @@ const authRouter = require('./authRouter');
 const uri = "mongodb://127.0.0.1:27017";
 const client = new MongoClient(uri);
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 
 app.use(express.json());
 // app.use(cookieParser());    // probably I don't need this line either;
 app.use("/", authRouter);
 
-const PORT = process.env.PORT || 3000;
 
 const start = async () => {
     try {
@@ -19,8 +20,7 @@ const start = async () => {
         app.listen(PORT, () => console.log('server has been started'));
     } catch (e) {
         console.log(e);
-    }
-    finally {
+    } finally {
         await client.close();
     }
 }
