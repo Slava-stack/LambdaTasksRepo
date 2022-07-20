@@ -1,0 +1,10 @@
+"use strict";
+exports.__esModule = true;
+var express_1 = require("express");
+var appController_1 = require("./appController");
+var router = new express_1.Router();
+router.get('/', appController_1["default"].getHelper);
+router.post('/', appController_1["default"].postHelper);
+router.get('/:json_name', appController_1["default"].sendJson);
+router.post('/:json_name', appController_1["default"].saveJson);
+exports["default"] = router;

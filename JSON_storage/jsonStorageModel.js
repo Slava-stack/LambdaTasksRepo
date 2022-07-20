@@ -13,22 +13,18 @@ async function jsonStorageValidation() {
         if (!collectionNames)
             await database.createCollection(collName, {
                 validator: {
-                    $validator: {
+                    $jsonSchema: {
                         bsonType: "object",
-                        required: ["key", "data"],
+                        required: ["json"],
                         properties: {
-                            key: {
-                                bsonType: "string",
-                                description: "must be a string and is required"
-                            },
-                            data: {
+                            json: {
                                 bsonType: "string",
                                 description: "must be a string and is required"
                             }
                         }
                     }
                 }
-            })
+            });
     } catch (e) {
         console.log(e);
     } finally {
