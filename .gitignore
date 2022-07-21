@@ -21,4 +21,6 @@ TelegramBot_weather_cast/.env
 Auth_Backend/.idea/
 Auth_Backend/mb server.js
 Auth_Backend/node_modules/
-JSON_storage/.idea
+JSON_storage/.idea/
+JSON_storage/node_modules/
+JSON_storage/src/.idea/
